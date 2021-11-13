@@ -67,6 +67,18 @@ def tokenize(text):
 
 
 def build_model():
+    '''
+    This function builds a ML model
+    
+    First, it created a Pipeline, then choose a parameter to tune, and finally,
+    the function uses GridSearchCV to Cross-Validate the parameter.
+    
+    INPUT
+    This function does not need any input
+    
+    OUTPUT
+    cv = The Machine Learning model
+    '''
     pipeline = Pipeline([
         ('vectorizer', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
@@ -83,6 +95,17 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    INPUT:
+    model = a ML model
+    X_test = the x_test part of the dataset
+    Y_test = the y_test part of the dataset
+    category_names = the names of the 36 categories that we need to consider
+    
+    OUTPUT
+    Although the function hasn't a return method, it prints out the
+    classification report for each of the categories
+    '''
     Y_pred = model.predict(X_test)
     
     Y_pred_df = pd.DataFrame(Y_pred, columns = category_names)
@@ -93,6 +116,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''
+    INPUT
+    model = the ML model to save
+    model_filepath = the path you want your model to be saved
+    
+    OUTPUT
+    Just saves the model
+    '''
     filename = model
     pickle.dump(filename, open(model_filepath, 'wb'))
 
